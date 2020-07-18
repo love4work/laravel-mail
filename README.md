@@ -2,7 +2,7 @@
 
 This package is build to give some flexibility to the current Mailer that Laravel provides.
 
-Some headaches it tries to solve or you:
+Some headaches it tries to solve for you:
 
 - Write your own logic on top of the Mailer and Message by extending the default
 - Allow for Mailer Extensions (see MailerExtensions)
@@ -19,7 +19,7 @@ To install through composer, run the following command from terminal:
     
 Next let us extend our mail config with this command:
     
-    php artisan vendor:publish --provider="Love4Work\Laravel\Mail\MailServiceProvider" --tag="config"
+    php artisan vendor:publish --provider="Love4Work\Laravel\Mail\MailBindingServiceProvider" --tag="config"
 
 ## Usage
 
@@ -66,6 +66,36 @@ class MailExtensionServiceProvider extends \Love4Work\Laravel\Mail\MailExtension
     // see full options on how to implement this in our test ServiceProvider
 }
 ```
+
+### Using the DkimProvider
+
+The DkimProvider makes it possible for us to inject our DKIM values.
+In this sample we pull the data from our configs.
+
+```php
+<?php
+
+class MailExtensionServiceProvider extends \Love4Work\Laravel\Mail\MailExtensionServiceProvider
+{
+
+    public function register()
+    {
+        parent::register();
+
+        // Here we can modify how we want to populate our DkimProvider
+        $this->app->singleton(DkimProviderContract::class,
+            fn($app) => new DkimProvider(
+                config('mail.dkim_selector'),
+                config('mail.dkim_domain'),
+                storage_path(config('mail.dkim_private_key'))
+            )
+        );
+    }
+}
+```
+
+**Note: The dkim_private_key can either be a string, or a path to a pem file.**
+
 
 ## Contributing
 
