@@ -2,7 +2,14 @@
   "name": "love4work/laravel-mail",
   "description": "Extend the core Laravel Mail capabilities",
   "type": "library",
-  "license": "BSD-2-Clause",
+  "keywords": [
+    "love4work",
+    "laravel-mail",
+    "mail",
+    "extensions",
+    "dkim"
+  ],
+  "license": "MIT",
   "authors": [
     {
       "name": "Peter Quentin",
@@ -17,7 +24,7 @@
   },
   "require-dev": {
     "orchestra/testbench": "^4.0|^5.0",
-    "phpunit/phpunit": "^9.2"
+    "phpunit/phpunit": "^8.4|^9.2"
   },
   "config": {
     "sort-packages": true
@@ -35,8 +42,8 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Love4Work\\Laravel\\Mail\\MailServiceProvider",
-        "Love4Work\\Laravel\\Mail\\MailExtensionServiceProvider"
+        "Love4Work\\Laravel\\Mail\\MailBindingServiceProvider",
+        "Love4Work\\Laravel\\Mail\\MailServiceProvider"
       ],
       "aliases": {
         "MailerExtension": "Love4Work\\Laravel\\Mail\\Facades\\MailerExtension"

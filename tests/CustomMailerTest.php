@@ -4,6 +4,7 @@ namespace Love4Work\Laravel\Mail\Tests;
 
 use Illuminate\Support\Facades\Mail;
 use Love4Work\Laravel\Mail\Contracts\DkimProvider;
+use Love4Work\Laravel\Mail\MailBindingServiceProvider;
 use Love4Work\Laravel\Mail\MailServiceProvider;
 use Love4Work\Laravel\Mail\Tests\TestClasses\Mailer;
 use Love4Work\Laravel\Mail\Tests\TestClasses\MailExtensionServiceProvider;
@@ -12,21 +13,11 @@ use Love4Work\Laravel\Mail\Tests\TestClasses\Message;
 class CustomMailerTest extends TestCase
 {
 
-    /**
-     * @param \Illuminate\Foundation\Application $app
-     *
-     * @return array
-     */
-    protected function getPackageProviders($app)
-    {
-        return [MailServiceProvider::class, MailExtensionServiceProvider::class];
-    }
-
     protected function getEnvironmentSetUp($app)
     {
-
+        parent::getEnvironmentSetUp($app);
         $config = $app['config']->get('mail');
-        $app['config']->set('mail', array_merge_recursive($config, [
+        $app['config']->set('mail', array_merge($config, [
             'driver' => 'log',
             'dkim_selector' => 'x',
             'dkim_domain' => 'localhost',
@@ -36,12 +27,19 @@ class CustomMailerTest extends TestCase
                 'message' => Message::class,
             ]
         ]));
-
-        $app['config']->set('view', [
-            'paths' => [realpath(__DIR__.'/views')],
-            'compiled' => realpath(__DIR__.'/../build')
-        ]);
     }
+
+    /**
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [MailBindingServiceProvider::class, MailServiceProvider::class, MailExtensionServiceProvider::class];
+    }
+
+
     /**
      * @test
      */

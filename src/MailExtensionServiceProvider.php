@@ -3,8 +3,9 @@
 namespace Love4Work\Laravel\Mail;
 
 use Illuminate\Support\ServiceProvider;
+use Love4Work\Laravel\Mail\Facades\MailerExtension as MailerExtensionFacade;
 
-class MailExtensionServiceProvider extends ServiceProvider
+abstract class MailExtensionServiceProvider extends ServiceProvider
 {
     /**
      * The extensions mappings for the application.
@@ -15,26 +16,24 @@ class MailExtensionServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bind(
-            \Love4Work\Laravel\Mail\Contracts\MailerExtension::class,
-            MailerExtension::class
-        );
+        $this->registerMailerExtensions();
+    }
 
-        $this->app->alias(
-            \Love4Work\Laravel\Mail\Contracts\MailerExtension::class,
-            'mailer-extension'
-        );
+    /**
+     * Register MailerExtensions
+     */
+    public function registerMailerExtensions(): void
+    {
 
         $extensions = $this->getExtensions();
 
         foreach ($extensions as $function => $listeners) {
             foreach (is_array($listeners) ? array_unique($listeners) : [$listeners] as $extension) {
 
-                \Love4Work\Laravel\Mail\Facades\MailerExtension::extend($function, $extension);
+                MailerExtensionFacade::extend($function, $extension);
 
             }
         }
-
     }
 
     /**

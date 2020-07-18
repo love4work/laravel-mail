@@ -2,8 +2,6 @@
 
 namespace Love4Work\Laravel\Mail;
 
-use Illuminate\Support\ServiceProvider;
-
 class MailServiceProvider extends \Illuminate\Mail\MailServiceProvider
 {
 
@@ -15,7 +13,7 @@ class MailServiceProvider extends \Illuminate\Mail\MailServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/mail.php', 'mail.customize');
-        $this->registerLove4WorkMailer();
+        $this->registerMailer();
         $this->registerMarkdownRenderer();
     }
 
@@ -24,17 +22,8 @@ class MailServiceProvider extends \Illuminate\Mail\MailServiceProvider
      *
      * @return void
      */
-    public function registerLove4WorkMailer()
+    public function registerMailer()
     {
-        $this->app->bind(
-            'Love4Work\Laravel\Mail\Contracts\Message',
-            config('mail.customize.message')
-        );
-
-        $this->app->bind(
-            'Love4Work\Laravel\Mail\Contracts\Mailer',
-            config('mail.customize.mailer'),
-        );
 
         $this->app->singleton('mail.manager', function ($app) {
             return new MailManager($app);

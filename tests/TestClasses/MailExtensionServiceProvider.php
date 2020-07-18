@@ -27,6 +27,7 @@ class MailExtensionServiceProvider extends \Love4Work\Laravel\Mail\MailExtension
     {
         parent::register();
 
+        // Here we can modify how we want to populate our DkimProvider
         $this->app->singleton(DkimProviderContract::class,
             fn($app) => new DkimProvider(
                 config('mail.dkim_selector'),
