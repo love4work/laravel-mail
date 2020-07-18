@@ -1,0 +1,49 @@
+{
+  "name": "love4work/laravel-mail",
+  "description": "Extend the core Laravel Mail capabilities",
+  "type": "library",
+  "license": "BSD-2-Clause",
+  "authors": [
+    {
+      "name": "Peter Quentin",
+      "email": "peter@love4work.com"
+    }
+  ],
+  "require": {
+    "php": "^7.4",
+    "illuminate/support": "^6.0|^7.0",
+    "illuminate/mail": "^6.0|^7.0",
+    "illuminate/container": "^6.0|^7.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^4.0|^5.0",
+    "phpunit/phpunit": "^9.2"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Love4Work\\Laravel\\Mail\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Love4Work\\Laravel\\Mail\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Love4Work\\Laravel\\Mail\\MailServiceProvider",
+        "Love4Work\\Laravel\\Mail\\MailExtensionServiceProvider"
+      ],
+      "aliases": {
+        "MailerExtension": "Love4Work\\Laravel\\Mail\\Facades\\MailerExtension"
+      }
+    }
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit tests"
+  }
+}
