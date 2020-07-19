@@ -82,6 +82,23 @@ class MailExtensionServiceProvider extends \Love4Work\Laravel\Mail\MailExtension
 }
 ```
 
+Add your new ServiceProvider to the providers array in `config/app.php`
+```php
+<?php
+[
+    //
+    'providers' => [
+    
+        /*
+         * Application Service Providers...
+         */
+        App\Providers\MailExtensionServiceProvider::class,
+        
+    ]
+    //
+];
+```
+
 ### Using the DkimProvider
 
 The DkimProvider makes it possible for us to inject our DKIM values.
