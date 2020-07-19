@@ -16,27 +16,42 @@ This package has support for Laravel 6.x and 7.x
 To install through composer, run the following command from terminal:
 
     composer require "love4work/laravel-mail"
-    
-Next let us extend our mail config with this command:
-    
-    php artisan vendor:publish --provider="Love4Work\Laravel\Mail\MailBindingServiceProvider" --tag="config"
 
+Create your own [Mailer](#mailer) and [Message](#message) classes
+ 
+Once you have your classes set up, update your `config/mail.php`:
+```php
+<?php
+return [
+    //
+    
+    'customize' => [
+        'mailer' => \App\Mail\Mailer::class,
+        'message' => \App\Mail\Message::class,
+    ]
+];
+```
 ## Usage
 
 By default, Laravel Mail gives you full access to extend our Mailer and Message
 
+#### Mailer
 ```php
 <?php
+
+namespace App\Mail;
 
 class Mailer extends \Love4Work\Laravel\Mail\Mailer
 {
     //
 }
 ```
-
+#### Message
 You will at least need to extend our Message class to add functionality you want to use via traits
 ```php
 <?php
+
+namespace App\Mail;
 
 use Love4Work\Laravel\Mail\Message\AttachDkimTrait;
 
