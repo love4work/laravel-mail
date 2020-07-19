@@ -74,7 +74,7 @@ Please see our [test ServiceProvider](tests/TestClasses/MailExtensionServiceProv
 class MailExtensionServiceProvider extends \Love4Work\Laravel\Mail\MailExtensionServiceProvider
 {
     protected array $extensions = [
-        'createMessage', [
+        'createMessage' => [
             'attachDkim'
         ]
     ];

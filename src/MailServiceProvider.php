@@ -12,8 +12,6 @@ class MailServiceProvider extends \Illuminate\Mail\MailServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/mail.php', 'mail.customize');
-
         if(method_exists($this, 'registerSwiftMailer')){
             $this->registerSwiftMailer();
         }

@@ -13,7 +13,7 @@ class MailExtensionServiceProvider extends \Love4Work\Laravel\Mail\MailExtension
      * @var array
      */
     protected array $extensions = [
-        'createMessage', [
+        'createMessage' => [
             'attachDkim'
         ]
     ];
